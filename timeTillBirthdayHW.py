@@ -11,6 +11,6 @@ fullBirthday = datetime.date(int(Byear),int(Bmonth),int(Bday))
 endOfCurrentYear = datetime.date(date.year,12,31) #finding end of this year and the year of next birthday
 endOfBirthdayYear = datetime.date(int(Byear),12,31)
 
-numOfDays = int(endOfCurrentYear.strftime("%j"))+int(endOfBirthdayYear.strftime("%j"))-(int(fullBirthday.strftime("%j"))+int(date.strftime("%j")))
+numOfDays = int(endOfCurrentYear.strftime("%j"))-int(date.strftime("%j"))+ (int(endOfBirthdayYear.strftime("%j")) -(int(endOfBirthdayYear.strftime("%j"))-int(fullBirthday.strftime("%j"))))
 print(numOfDays) #total number of days in this year and birthday year - number of days through this year and when bitday is
 #removes need to workout leap years.

@@ -9,6 +9,9 @@ Bday,Bmonth,Byear = nextBirthday.split("/") #dividing next birthday into separat
 fullBirthday = datetime.date(int(Byear),int(Bmonth),int(Bday))
 
 endOfCurrentYear = datetime.date(date.year,12,31) #finding end of this year
-
-numOfDays = (int(endOfCurrentYear.strftime("%j"))-int(date.strftime("%j"))) + int(fullBirthday.strftime("%j"))
-print(numOfDays) #calculating number of days left in this year + number of days through the next year the birthday is
+if int(Byear)==int(date.year)+1:
+    numOfDays = (int(endOfCurrentYear.strftime("%j"))-int(date.strftime("%j"))) + int(fullBirthday.strftime("%j"))
+    print(numOfDays) #calculating number of days left in this year + number of days through the next year the birthday is
+else:
+    numOfDays = int(fullBirthday.strftime("%j")) - int(date.strftime("%j"))
+    print(numOfDays)

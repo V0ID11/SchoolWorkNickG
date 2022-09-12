@@ -6,5 +6,5 @@ while True:
     else:
         print("Please make sure you print a number")
         continue
-for i in range(13):
+for i in range(1,13):
     print(f"{i} x {table} = {i*int(table)}")

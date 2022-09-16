@@ -30,7 +30,7 @@ class stack:
         else:
             self.stack.pop()
             self.pointer = len(self.stack)
-            
+
     def peek(self):
         print(self.stack[self.pointer-1])
     
@@ -40,10 +40,10 @@ class stack:
             action = input("1.Push\n2.Pop \n3.Peek \n4.Test For Empty \n5.Test For Full \n6.Quit ")
             if action == "1":
                 self.push()
-                print(stack)
+                print(self.stack)
             elif action == "2":
                 self.remove()
-                print(stack)
+                print(self.stack)
             elif action == "3":
                 self.peek()
             elif action == "4":

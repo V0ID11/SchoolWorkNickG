@@ -1,37 +1,82 @@
 
-
 def newScore():
-    scores = open("Scores.csv","a")
+    scores = open("ListsScore/Scores.txt","a")
     name = input("Who would you like to enter a score for?")
     score = input("What is their score x/y: ")
     x,y = score.split("/")
     score = (int(x)/int(y)) * 100
-    scores.write(f"{name},{score}")
-    print("Complete")
+    scores.writelines(f"{name},{score}\n")
+    print("\nComplete")
     scores.close()
-    Menu()
-
-def average():
-    scores = open("Scores.csv", "r")
-    allScores = []
-    x = scores.readline()
-    for i in x:
-        y = i.split(',')
-        print(y)
-        allScores.append(float(y[1]))
-    print(f"{sum(allScores)/len(allScores)}%")
-    scores.close()
-    Menu()
     
 
+def average():
+    scores = open("ListsScore/Scores.txt", "r")
+    allScores = []
+    x = scores.readlines()
+    for i in x:
+        y = i.split(',')
+        allScores.append(float(y[1]))
+    print(f"\nAverage Score: {round(sum(allScores)/len(allScores),2)}%")
+    scores.close()
+    
+    
+def highscore():
+    scores = open("ListsScore/Scores.txt","r")
+    highName = ""
+    highScore = 0
+    x = scores.readlines()
+    for i in x:
+        y = i.split(',')
+        if float(y[1]) > float(highScore):
+            highScore = float(y[1])
+            highName = y[0]
+    print(f"\n{highName} has the highest score of {round(highScore,2)}%")
+    scores.close()
+
+def lowScore():   
+    scores = open("ListsScore/Scores.txt","r")
+    lowName = ""
+    lowScore = 100
+    x = scores.readlines()
+    for i in x:
+        y = i.split(',')
+        if float(y[1]) < float(lowScore):
+            lowScore = float(y[1])
+            lowName = y[0]
+    print(f"\n{lowName} has the lowest score of {round(lowScore,2)}%")
+    scores.close()
+
+def orderedScores():
+    scores = open("ListsScore/Scores.txt","r")
+    allScores = []
+    x = scores.readlines()
+    for i in x:
+        y = i.split(',')
+        allScores.append([y[0],y[1]])
+    allScores.sort(key = lambda l:l[1], reverse=True)
+    print('\n')
+    for i in allScores:
+        x,y = i[0],i[1]
+        print(f"{x}, {round(float(y),2)}%")
+    scores.close()
+
 def Menu():
-    action = input("\n\n1.New Score \n2.Create Average \n3.Quit  ")
-    if action == "1":
-        newScore()
-    elif action == "2":
-        average()
-    else:
-        quit()
+    end = False
+    while not end:
+        action = input("\n1.New Score \n2.Create Average\n3.Highest Score \n4.Lowest Score \n5.Ordered Scores \n6.Quit  ")
+        if action == "1":
+            newScore()
+        elif action == "2":
+            average()
+        elif action == "3":
+            highscore()
+        elif action == "4":
+            lowScore()
+        elif action == "5":
+            orderedScores()
+        else:
+            end = True
 
 Menu()
 

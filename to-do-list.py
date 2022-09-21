@@ -48,10 +48,19 @@ class todo:
             elif action == "4":
                 self.complete()  
             else:
+                x = open("SchoolWorkNickG/to-do-list.txt","w")
+                for i in range(len(self.tasks)):
+                    x.writelines(f"{self.tasks[i]},{self.priority[i]}\n")
                 quit()
-    
 
 priority = []
-tasks = []
+tasks = []   
+y = open("SchoolWorkNickG/to-do-list.txt","r")
+lines = y.readlines()
+for i in lines:
+    line = i.split(",")
+    tasks.append(line[0])
+    priority.append(int(line[1]))
+
 main = todo(priority, tasks)
 main.Menu()

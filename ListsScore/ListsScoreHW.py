@@ -2,11 +2,21 @@
 def newScore():
     scores = open("ListsScore/Scores.txt","a")
     name = input("Who would you like to enter a score for?")
-    score = input("What is their score x/y: ")
-    x,y = score.split("/") #splits to make a percentage so all scores can be compared equally
-    score = (int(x)/int(y)) * 100
-    scores.writelines(f"{name},{score}\n")
-    print("\nComplete") 
+    z = False
+    score_list = []
+    scores.writelines(f"{name}")
+    while not z:
+        addMore = input("Add Scores y/n: ")
+        if addMore.lower() == 'y':
+            score = input("What is their score x/y: ")
+            x,y = score.split("/") #splits to make a percentage so all scores can be compared equally
+            score = (int(x)/int(y)) * 100
+            score_list.append(score)
+            scores.writelines(f",{score}")
+        else:
+            z = True
+    scores.writelines("\n")
+    print(f"\nAverage: {round(sum(score_list)/len(score_list),2)}") 
     scores.close()
     
 #generate average
@@ -16,7 +26,9 @@ def average():
     x = scores.readlines()
     for i in x:
         y = i.split(',') #split so last percentage value can be used
-        allScores.append(float(y[1]))
+        length = len(y)
+        for z in range(1,length):
+            allScores.append(float(y[z]))
     print(f"\nAverage Score: {round(sum(allScores)/len(allScores),2)}%") #rounds the average to two decimal places
     scores.close()
     

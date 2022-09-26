@@ -24,7 +24,7 @@ def sieve():
     for i in range(len(AllNums)):
         if AllNums[i] == True:
             primes.append(i)
-    print(primes)
+    print(primes[-5:])
     print("Elapsed: ", time.time() - start)
 
 sieve()

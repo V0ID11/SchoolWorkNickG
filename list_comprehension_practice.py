@@ -75,14 +75,11 @@ def Primes(number):
     if number == 2:
         return True
     else:
-        if number % 2 == 0:
-            return False
-        else:
-            for i in range(2,number):
-                if number % i == 0:
-                    return False
-                else:
-                    return True 
+        for i in range(2,number):
+            if number % i == 0:
+                return False
+            else:
+                return True 
 
-primes = [number for number in numbers if Primes(number) == True ]
+primes = [number for number in numbers if len([i for i in range(2,number) if number % i ==0 ]) == 0 and number > 0]
 print(primes)

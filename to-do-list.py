@@ -1,8 +1,8 @@
 class todo:
-    def __init__(self):
+    def __init__(self,filename):
         priority = []
         tasks = []   
-        y = open("to-do-list.txt","r")
+        y = open(filename,"r")
         lines = y.readlines()
         for i in lines:
             line = i.split(",")
@@ -62,6 +62,6 @@ class todo:
                 quit()
 
 
-
-main = todo()
+filename = "to-do-list.txt"
+main = todo(filename)
 main.Menu()

@@ -1,7 +1,15 @@
 class todo:
-    def __init__(self,priority, tasks):
-        self.priority = priority
+    def __init__(self):
+        priority = []
+        tasks = []   
+        y = open("to-do-list.txt","r")
+        lines = y.readlines()
+        for i in lines:
+            line = i.split(",")
+            tasks.append(line[0])
+            priority.append(int(line[1]))
         self.tasks = tasks
+        self.priority = priority
     def add(self):
         task = input("What task needs to be added: ")
         pri = input("What is the priority of this task 1,2,3: ")
@@ -53,14 +61,7 @@ class todo:
                     x.writelines(f"{self.tasks[i]},{self.priority[i]}\n")
                 quit()
 
-priority = []
-tasks = []   
-y = open("to-do-list.txt","r")
-lines = y.readlines()
-for i in lines:
-    line = i.split(",")
-    tasks.append(line[0])
-    priority.append(int(line[1]))
 
-main = todo(priority, tasks)
+
+main = todo()
 main.Menu()

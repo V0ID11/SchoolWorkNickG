@@ -1,21 +1,30 @@
+
 import time
-def sieve(max):
-    AllNums = [i for i in range(2,max+1)] # generate list of numbers up to and including max
+
+def sieve():
+    x = 1
+    max = int(input("Enter Number you want to find primes to: "))
     primes = [2]
-    NextNum = 2
-    
-    for y in range(1,max):
-        for i in range(0,max+1,NextNum):
-            if i in AllNums:
-                AllNums.remove(i)
-        if AllNums == []:
-            break
-        primes.append(AllNums[0])
-        NextNum = AllNums[0]  
+    start = time.time()
+    AllNums = [True]*max
+    for i in range(3,max):
+        if i % 2 == 0:
+            AllNums[i] = False
+    AllNums[0] = False
+    AllNums[1] = False
+    nextNum = 2
+    while nextNum**2 <= max:
+        for i in range(nextNum**2,max,nextNum):
+            if AllNums[i] == True:
+                AllNums[i] = False
+        while AllNums[nextNum + x] != True:
+            x += 1
+        nextNum = nextNum+x
+        x = 1
+    for i in range(len(AllNums)):
+        if AllNums[i] == True:
+            primes.append(i)
     print(primes)
-        
-        
-start = time.time()
-max = input("What Do you want to print the Primes Up to: ")
-sieve(int(max))
-print("Elapsed time:", time.time()-start)
+    print("Elapsed: ", time.time() - start)
+
+sieve()

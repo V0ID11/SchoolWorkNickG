@@ -4,7 +4,7 @@ import time
 def sieve():
     x = 1
     max = int(input("Enter Number you want to find primes to: "))
-    primes = [2]
+    primes = []
     start = time.time()
     AllNums = [True]*max
     for i in range(3,max):
@@ -24,7 +24,7 @@ def sieve():
     for i in range(len(AllNums)):
         if AllNums[i] == True:
             primes.append(i)
-    print(primes[-5:])
+    print("Number Of Primes:", len(primes))
     print("Elapsed: ", time.time() - start)
 
 sieve()

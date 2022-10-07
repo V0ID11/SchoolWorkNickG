@@ -6,18 +6,18 @@ class Rectangle:
         self.height = height
 
     def get_area(self):
-        return round(self.width * self.height,2)
+        return self.width * self.height
 
     def get_perimeter(self):
-        return round(2*self.width + 2* self.height,2)
-        
+        return 2*self.width + 2* self.height
+
     def get_diagonal(self):
-        return round((self.width**2 + self.height ** 2)**0.5,2)
+        return (self.width**2 + self.height ** 2)**0.5
 
 height = input("Enter Height: ")
 width = input("Enter Width: ")
 
 myRect = Rectangle(float(width), float(height))
-print("Area: ",myRect.get_area())
-print("Perimeter: ",myRect.get_perimeter())
-print("Diagonal Length: ",myRect.get_diagonal())
+print("Area: ",round(myRect.get_area(),2))
+print("Perimeter: ",round(myRect.get_perimeter(),2))
+print("Diagonal Length: ",round(myRect.get_diagonal(),2))

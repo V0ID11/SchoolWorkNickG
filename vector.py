@@ -24,17 +24,30 @@ class Vector:
     
     def __rmul__(self,other) -> Vector:
         return Vector(self.x * other, self.y * other)
+    
+    def __eq__(self, other) -> bool:
+        return True if self.x == other.x and self.y == other.y else False
 
-a = Vector(5,9)
-print(a)
-print(a.magnitude())
-b = Vector(6,2)
-z = a + b
-print(b.unitVector())
-print(z)
+def test_vector():
+    vec1 = Vector(3, 4)
+    vec2 = Vector(4, 5)
 
-x = a * 8
+    # Test magnitude
+    print("Testing magnitude function...", end='')
+    if vec1.magnitude() == 5:
+        print('Test passed')
+    else:
+        print('Test FAILED!')
 
-y = 8 * Vector(3, 4)
-print(x)
-print(y)
+    # Test equality
+    print("Testing equality...")
+    assert Vector(1, 2) == Vector(1, 2), 'Equality method not working'
+
+
+    # Test Addition
+    print("Testing addition...", end='')
+    if vec1 + vec2 == Vector(7, 9):
+        print('Test passed')
+    else:
+        print('Test FAILED!')
+test_vector()

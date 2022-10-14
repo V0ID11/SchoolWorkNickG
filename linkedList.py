@@ -1,5 +1,4 @@
 
-
 class Node:
     def __init__(self,data,nextNode) -> None:
         self.data = data
@@ -31,10 +30,19 @@ class Stack:
         newNode = Node(x,self.headNode)
         self.headNode = newNode
         self.size += 1
+    
+    def displayAll(self):
+        newHead = self.headNode
+        display = []
+        while newHead != self.endNode:
+            display.append(newHead.get_Data())
+            newHead = newHead.nextNode
+        return display
 
 linkedList = Stack()
 linkedList.Push()
-linkedList.Pop()
-linkedList.Pop()
+linkedList.Push()
+
 print(linkedList.headNode.get_Data())
+print(linkedList.displayAll())
 

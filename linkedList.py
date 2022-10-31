@@ -22,8 +22,8 @@ class Stack:
             return
         x = self.headNode
         self.headNode = self.headNode.nextNode
-        del(x)
         self.size -= 1
+        return x.data
 
     def Push(self,x):
         
@@ -42,7 +42,7 @@ class Stack:
 linkedList = Stack()
 linkedList.Push(5)
 linkedList.Push(4)
-
+print(linkedList.Pop())
 print(linkedList.headNode.get_Data())
 print(linkedList.displayAll())
 

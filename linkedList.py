@@ -25,8 +25,8 @@ class Stack:
         del(x)
         self.size -= 1
 
-    def Push(self):
-        x = input("What data would you like the new node to contain")
+    def Push(self,x):
+        
         newNode = Node(x,self.headNode)
         self.headNode = newNode
         self.size += 1
@@ -40,9 +40,22 @@ class Stack:
         return display
 
 linkedList = Stack()
-linkedList.Push()
-linkedList.Push()
+linkedList.Push(5)
+linkedList.Push(4)
 
 print(linkedList.headNode.get_Data())
 print(linkedList.displayAll())
+
+def test_stack():
+    testStack = Stack()
+    for i in range(10):
+        testStack.Push(i)
+
+    #Check Size
+    print("Checking Size:")
+    print(True if testStack.size == 10 else False)
+
+    
+test_stack()
+
 

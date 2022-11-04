@@ -57,7 +57,7 @@ class OpenWagon(Wagon):
         super().__init__(ownerName,weight,numOfWheels)
 
     def get_Type(self):
-        return "Closed Wagon"    
+        return "Open Wagon"    
 
     def __repr__(self):
         return f"Open Wagon\nOwner: {self.ownerName}\nWeight: {self.weight}\nWheels: {self.numOfWheels}"
@@ -85,5 +85,7 @@ if __name__ == "__main__":
     for x in range(4):
         for i in range(15):
             yard.removeWagon(x)
+    
 
     print(yard)
+    print(yard.removeWagon(3))

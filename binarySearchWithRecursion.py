@@ -2,16 +2,16 @@ import math
 import random
 def binarySearch(items, searchFor, high, low):
     midpoint = math.ceil((high+low)/2)
-    
-    
     if items[midpoint] == searchFor:
         return "Found"
-    elif low > high:
+    elif low >= high:
         return "Not Found"
     elif items[midpoint] > searchFor:
-        binarySearch(items,searchFor, midpoint-1,low)
+         a = binarySearch(items,searchFor, midpoint-1,low)
     elif items[midpoint] < searchFor:
-        binarySearch(items,searchFor,high,midpoint + 1)
+        a = binarySearch(items,searchFor,high,midpoint + 1)
+    return a
+    
         
 
 if __name__ == "__main__":

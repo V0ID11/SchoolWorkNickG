@@ -1,5 +1,6 @@
 import random
 
+
 class Node:
     def __init__(self,value):
         self.left = None
@@ -7,46 +8,61 @@ class Node:
         self.data = value
     
     def addItem(self, toAdd):
-        if self.data == toAdd:
-            return
-
-        elif toAdd < self.data:
-            if self.left == None:
-                self.left = Node(toAdd)
-            else:
-                self.left.addItem(toAdd)
         
-        else:
-            if self.right == None:
-                self.right = Node(toAdd)
+
+        if toAdd < self.data:
+            if self.left != None:
+                print("left:",self.left)
+                self.left.addItem(toAdd)
+                
             else:
+                self.left = Node(toAdd)
+                print("left:",self.left)
+                
+        elif toAdd > self.data:
+            if self.right != None:
+                print("right:",self.right)
                 self.right.addItem(toAdd)
-    
+                
+            else:
+                self.right = Node(toAdd)
+                print("right:",self.right)
+
+        elif self.data == toAdd:
+            print(self)
+            return
+                
     def findItem(self, toFind):
         
         if self.data == toFind:
             return True
         elif toFind < self.data:
-            if self.left == None:
-                return False
+            if self.left != None:
+                #print(self.left)
+                x = self.left.findItem(toFind)
             else:
-                return self.left.findItem(toFind)
+                return False
         else:
-            if self.right == None:
-                return False
+            if self.right != None:
+                #print(self.right)
+                x = self.right.findItem(toFind)
             else:
-                return self.right.findItem(toFind)
+                return False
+        return x
+    def __str__(self) -> str:
+        return f"{self.data}"
 
     
 
 test = [random.randint(1,100) for i in range(50)]
-x = Node(test[0])
-for i in (1,len(test)-1):
-    x.addItem(test[i])
+Tree = Node(test[0])
+print(Tree)
+for i in range(1,len(test)):
+    Tree.addItem(test[i])
 print(sorted(test))
 for i in range(10):
     toFind = random.randint(1,100)
-    print(toFind,": ",x.findItem(toFind))
+    print(toFind,": ",Tree.findItem(toFind))
 
 
 

@@ -54,14 +54,14 @@ class Node:
 
     
 
-test = [random.randint(1,100) for i in range(50)]
+test = [random.randint(1,10000) for i in range(5000)]
 Tree = Node(test[0])
 print(Tree)
 for i in range(1,len(test)):
     Tree.addItem(test[i])
 print(sorted(test))
-for i in range(10):
-    toFind = random.randint(1,100)
+for i in range(100):
+    toFind = random.randint(1,10000)
     print(toFind,": ",Tree.findItem(toFind))
 
 

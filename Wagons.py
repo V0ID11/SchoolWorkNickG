@@ -9,7 +9,7 @@ class Yard:
     def removeWagon(self,siding):
         return self.sidings[siding].pop()
     
-    def __str__(self) -> str:
+    def __repr__(self) -> str:
         return "\n".join([self.sidings[i].__str__() for i in range(len(self.sidings))])
     
 

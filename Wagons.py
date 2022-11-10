@@ -19,7 +19,7 @@ class Siding:
         self.pointer = -1
 
     def push(self, wagon):
-        if self.pointer == 29:
+        if self.pointer == len(self.wagons)-1:
             raise Exception("Siding is Full")
         else:
             self.pointer += 1

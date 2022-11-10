@@ -12,9 +12,11 @@ class Board:
     def updateBoard(self, x, y,marker):
         self.grid[y][x] = marker
 
-    def checkSquare(x,y):
-        if self.grid[y][x]:
-            pass
+    def checkSquare(self,x,y):
+        if self.grid[y][x] == "":
+            return True
+        else:      
+            return False
 
     def checkForWin():
         pass

@@ -1,9 +1,9 @@
 class Board:
     def __init__(self) -> None:
-        self.grid = [["","",""] for i in range(3)]
+        self.grid = [[" "," "," "] for i in range(3)]
 
     def displayBoard(self):
-        print(f"   0  1  2")
+        print(f"   0   1   2")
         for i in range(2):
             print(f"{i}   {self.grid[i][0]} | {self.grid[i][1]} | {self.grid[i][2]}")
             print("   --------")
@@ -18,14 +18,25 @@ class Board:
         else:      
             return False
 
-    def checkForWin():
-        pass
+    def checkForWin(self):
+        for i in range(3):
+            if self.grid[i][0] == self.grid[i][1] == self.grid[i][2] != " ":
+                return f"{self.grid[i][0]}"
 
 class Player:
     def __init__(self) -> None:
         pass
 
-game = Board()
-game.updateBoard(2,1,'X')
-game.displayBoard()
+class Game:
+    def __init__(self,numPlayers):
+        self.board = Board()
+        if numPlayers == 1:
+            Player()
+        elif numPlayers == 2:
+            self.x = Player()
+            self.y = Player()
 
+
+
+game = Board()
+game.displayBoard()

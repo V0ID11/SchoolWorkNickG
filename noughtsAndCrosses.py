@@ -3,10 +3,10 @@ class Board:
         self.grid = [[" "," "," "] for i in range(3)]
 
     def displayBoard(self):
-        print(f"   0   1   2")
+        print(f"    0   1   2")
         for i in range(2):
             print(f"{i}   {self.grid[i][0]} | {self.grid[i][1]} | {self.grid[i][2]}")
-            print("   --------")
+            print("    ---------")
         print(f"{2}   {self.grid[2][0]} | {self.grid[2][1]} | {self.grid[2][2]}")
     
     def updateBoard(self, x, y,marker):
@@ -22,6 +22,10 @@ class Board:
         for i in range(3):
             if self.grid[i][0] == self.grid[i][1] == self.grid[i][2] != " ":
                 return f"{self.grid[i][0]}"
+            elif self.grid[0][i] == self.grid[1][i] == self.grid[2][i] != " ":
+                return f"{self.grid[0][i]}"
+        if self.grid[0][0] == self.grid[1][1] == self.grid[2][2] != " " or self.grid[0][2] == self.grid[1][1] == self.grid[2][0] != " "
+            return f"{self.grid[1][1]}"
 
 class Player:
     def __init__(self) -> None:

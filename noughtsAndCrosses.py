@@ -65,7 +65,7 @@ class Game:
             self.board.displayBoard()
             move = input(f"Where will {self.player1.name} go in the form x,y")
             x,y = move.split(",")
-            while self.board.checkSquare(int(x), int(y)) == False:
+            while self.board.checkSquare(int(x), int(y)) != False:
                 move = input(f"Where will {self.player1.name} go in the form x,y")
                 move.split(",")
             self.board.updateBoard(int(x), int(y), self.player1)
@@ -74,7 +74,7 @@ class Game:
                 return  f"{self.player1.__repr__()} wins"
             self.board.displayBoard()            
             x,y = random.randint(0,2),random.randint(0,2)
-            while self.board.checkSquare(int(x), int(y)) == False:
+            while self.board.checkSquare(int(x), int(y)) != False:
                 x,y = random.randint(0,2),random.randint(0,2)
             self.board.updateBoard(x,y,self.computer)
             if self.board.checkForWin() == True:
@@ -84,7 +84,7 @@ class Game:
             self.board.displayBoard()
             move = input(f"Where will {self.player1.name} go in the form x,y")
             x,y = move.split(",")
-            while self.board.checkSquare(int(x), int(y)) == False:
+            while self.board.checkSquare(int(x), int(y)) != False:
                 move = input(f"Where will {self.player1.name} go in the form x,y")
                 move.split(",")
             self.board.updateBoard(int(x), int(y), self.player1)
@@ -93,7 +93,7 @@ class Game:
             self.board.displayBoard()
             move = input(f"Where will {self.player2.name} go in the form x,y")
             x,y = move.split(",")
-            while self.board.checkSquare(int(x), int(y)) == False:
+            while self.board.checkSquare(int(x), int(y)) != False:
                 move = input(f"Where will {self.player2.name} go in the form x,y")
                 move.split(",")
             self.board.updateBoard(int(x), int(y), self.player2)

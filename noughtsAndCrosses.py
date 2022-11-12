@@ -2,7 +2,7 @@ import random
 
 class Board:
     def __init__(self) -> None:
-        self.grid = [[" "," "," "] for i in range(3)]
+        self.grid = [[" "," "," "],[" "," "," "],[" "," "," "]]
 
     def displayBoard(self):
         print(f"    0   1   2")
@@ -15,10 +15,10 @@ class Board:
         self.grid[y][x] = player
 
     def checkSquare(self,x,y):
-        if self.grid[y][x] == "":
-            return False
-        else:      
+        if self.grid[y][x] != " ":
             return True
+        else:      
+            return False
 
     def checkForWin(self):
         for i in range(3):
@@ -26,7 +26,7 @@ class Board:
                 return True
             elif self.grid[0][i] == self.grid[1][i] == self.grid[2][i] and self.grid[0][i] != " ":
                 return True
-        if self.grid[0][0] == self.grid[1][1] == self.grid[2][2] != " " or self.grid[0][2] == self.grid[1][1] == self.grid[2][0] and self.grid[2][2]!= " ":
+        if (self.grid[0][0] == self.grid[1][1] == self.grid[2][2] or self.grid[0][2] == self.grid[1][1] == self.grid[2][0]) and self.grid[1][1]!= " ":
             return True
         else:
             return False
@@ -73,9 +73,9 @@ class Game:
             if self.board.checkForWin() == True:
                 return  f"{self.player1.__repr__()} wins"
             self.board.displayBoard()            
-            x,y = random.randint(0,3),random.randint(0,3)
+            x,y = random.randint(0,2),random.randint(0,2)
             while self.board.checkSquare(int(x), int(y)) == False:
-                x,y = random.randint(0,3),random.randint(0,3)
+                x,y = random.randint(0,2),random.randint(0,2)
             self.board.updateBoard(x,y,self.computer)
             if self.board.checkForWin() == True:
                 return  f"Computer Wins"
@@ -101,11 +101,12 @@ class Game:
                 return  f"{self.player2.__repr__()} Wins"
             self.board.displayBoard()
 
-
+x =Board()
+print(x.checkForWin())
 
 numPlayer = int(input("How Many Players? "))
 game = Game(numPlayer)
 if numPlayer == 1:
-    print(game.gameLoop2Player())
-else:
     print(game.gameLoopComputer())
+else:
+    print(game.gameLoop2Player())

@@ -37,7 +37,7 @@ class Player:
         self.marker = marker
     def __str__(self) -> str:
         return self.marker
-    def __repr__(self) -> str:
+    def get_Name(self) -> str:
         return self.name
 
 class Game:
@@ -63,15 +63,15 @@ class Game:
     def gameLoopComputer(self):
         while True:
             self.board.displayBoard()
-            move = input(f"Where will {self.player1.name} go in the form x,y")
+            move = input(f"Where will {self.player1.get_Name()} go in the form x,y")
             x,y = move.split(",")
             while self.board.checkSquare(int(x), int(y)) != False:
-                move = input(f"Where will {self.player1.name} go in the form x,y")
+                move = input(f"Where will {self.player1.get_Name()} go in the form x,y")
                 move.split(",")
             self.board.updateBoard(int(x), int(y), self.player1)
             self.board.displayBoard()
             if self.board.checkForWin() == True:
-                return  f"{self.player1.__repr__()} wins"
+                return  f"{self.player1.get_Name()} wins"
             self.board.displayBoard()            
             x,y = random.randint(0,2),random.randint(0,2)
             while self.board.checkSquare(int(x), int(y)) != False:
@@ -82,23 +82,23 @@ class Game:
     def gameLoop2Player(self):
         while True:
             self.board.displayBoard()
-            move = input(f"Where will {self.player1.name} go in the form x,y")
+            move = input(f"Where will {self.player1.get_Name()} go in the form x,y")
             x,y = move.split(",")
             while self.board.checkSquare(int(x), int(y)) != False:
-                move = input(f"Where will {self.player1.name} go in the form x,y")
+                move = input(f"Where will {self.player1.get_Name()} go in the form x,y")
                 move.split(",")
             self.board.updateBoard(int(x), int(y), self.player1)
             if self.board.checkForWin() == True:
-                return  f"{self.player1.__repr__()} Wins"
+                return  f"{self.player1.get_Name()} Wins"
             self.board.displayBoard()
-            move = input(f"Where will {self.player2.name} go in the form x,y")
+            move = input(f"Where will {self.player2.get_Name()} go in the form x,y")
             x,y = move.split(",")
             while self.board.checkSquare(int(x), int(y)) != False:
-                move = input(f"Where will {self.player2.name} go in the form x,y")
+                move = input(f"Where will {self.player2.get_Name()} go in the form x,y")
                 move.split(",")
             self.board.updateBoard(int(x), int(y), self.player2)
             if self.board.checkForWin() == True:
-                return  f"{self.player2.__repr__()} Wins"
+                return  f"{self.player2.get_Name()} Wins"
             self.board.displayBoard()
 
 x =Board()

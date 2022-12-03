@@ -4,23 +4,27 @@ with open("adventOfCode/AOC2.txt", "r") as file:
 elf = []
 me = []
 for i in lines:
+    i = i.strip()
     x,y = i.split(" ")
-    y.strip()
     me.append(y)
     elf.append(x)
 
-wins = {"A":"Y", "B":"Z", "C":"X"}
+wins = {"A":"P", "B":"S", "C":"R"}
+equal = {"A":"R", "B":"P", "C":"S"}
+loss = {"A":"S", "B":"R", "C":"P"}
+Scores = {"R":1, "P":2, "S":3}
+choice = []
 score = 0
 for i in range(len(me)):
-    if me[i] == elf[i]:
+    if me[i] == "Y":
         score += 3
-    elif wins[elf[i]].upper() == me[i]:
-        print(wins[elf[i]])
+        choice.append(Scores[equal[elf[i]]])
+    elif me[i] == "Z":
         score += 6
-    if me[i] == "X":
-        score += 1
-    elif me[i] == "Y":
-        score+=2
+        choice.append(Scores[wins[elf[i]]])
     else:
-        score+=3
+        choice.append(Scores[loss[elf[i]]])
+print(choice)
+score += sum(choice)
+    
 print(score)

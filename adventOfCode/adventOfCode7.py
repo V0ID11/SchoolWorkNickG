@@ -6,6 +6,9 @@ class Directory:
         self.parent = parent
         self.subdirs = []
 
+        if parent != None:
+            self.parent.subdirs.append(self)
+
     
     def totalSize(self):
         self.total_size = self.file_sizes
@@ -15,6 +18,9 @@ class Directory:
 
     def __repr__(self) -> str:
         return f"[{self.name=}   {self.total_size=}  {self.subdirs=}]"
+
+    def getSubDirs(self):
+        return [j for i in self.subdirs for j in i.getSubDirs()] + [self]
 
 count = 0
 sizes = {}
@@ -30,39 +36,35 @@ with open("AOC7.txt", "r") as file:
         if i[0] == "$":
             if i[1] == "cd":
                 if i[2] == "/":
-                    sizes.update({currentDirectory: currentDirectory.totalSize()})
                     currentDirectory = outerDirectory
                     
                 elif i[2] == "..":
-                    sizes.update({currentDirectory: currentDirectory.totalSize()})
                     currentDirectory = currentDirectory.parent
                 else:
-                    sizes.update({currentDirectory: currentDirectory.totalSize()})
-                    currentDirectory = x
-                    break
-
-        elif i[0] == "dir":
-            x = Directory(i[1],currentDirectory)
-            currentDirectory.subdirs.append(x)
-            count+=1
+                    currentDirectory = Directory(i[2], currentDirectory)
+                    
 
         elif i[0].isnumeric():
             currentDirectory.file_sizes += int(i[0])
+
+    print(outerDirectory)
+    print(outerDirectory.getSubDirs())
+    sizes = [i.totalSize() for i in outerDirectory.getSubDirs()]
         
     
 print(count)
 totalSize = 0
-less100000 = []
-greater100000 = []
+items = []
+x = 70000000 - outerDirectory.totalSize()
+x = 30000000 - x
+
 for i in sizes:
-    if sizes[i] < 100000:
-        less100000.append(sizes[i])
-        totalSize += sizes[i]
-    elif sizes[i]>=100000:
-        greater100000.append(sizes[i])
-print(len(less100000) + len(greater100000))
-print(totalSize)
-            
-print(outerDirectory)
+    if i >= x:
+        items.append(i)
+
+
+print(min(items))
+
+
     
 

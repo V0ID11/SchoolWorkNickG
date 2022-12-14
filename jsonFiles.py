@@ -20,16 +20,43 @@ import urllib.request
 #     print(json_str)
 #     json_file.write(json_str)
 
-
 type = input("What type of Cocktail do you want")
-url = f"https://www.thecocktaildb.com/api/json/v1/1/search.php?s={type.lower()}"
-data = urllib.request.urlopen(url).read().decode()
-instructions = json.loads(data)
+drinks = urllib.request.urlopen(f"https://www.thecocktaildb.com/api/json/v1/1/search.php?s={type}").read().decode()
+drinks = json.loads(drinks)
+drinks = drinks["drinks"]
+choice = 1
+if len(drinks) > 1:
+    print()
+    for i,drink in enumerate(drinks):
+        drink_name = drink["strDrink"]
+        print(f"{i+1}) {drink_name}")
+    choice = int(input("\nWhat drink do you want: "))
+
+try:
+    instructions = drinks[choice-1]
+except:
+    instructions = drinks[0]
+        
+
+
+
 ingredients = []
 for i in range(15):
-    if instructions["drinks"][0][f"strIngredient{i+1}"] != None:
-        ingredients.append(instructions["drinks"][0][f"strIngredient{i+1}"])
-x = ", "
-y = instructions["drinks"][0]["strInstructions"]
+    if instructions[f"strIngredient{i+1}"] != None:
+        ingredients.append(instructions[f"strIngredient{i+1}"])
+measures = []
+for i in range(15):
+    if instructions[f"strMeasure{i+1}"] != None:
+        measures.append(instructions[f"strMeasure{i+1}"])
+x = "\n "
+ingMeasures = {}
+for i in range(len(ingredients)):
+    try:
+        ingMeasures.update({ingredients[i]:measures[i]})
+    except:
+        ingMeasures.update({ingredients[i]:"Follow Instructions"})
+y = instructions["strInstructions"]
 y = y.split(".")
-print(f"Ingredients: {x.join(ingredients)}\nInstructions: \n", "\n".join(y))
+print("Name: ", instructions["strDrink"])
+print("Ingredients: \n", x.join(i+":"+ingMeasures[i] for i in ingMeasures))
+print("Instructions: \n", "\n".join(y))

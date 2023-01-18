@@ -15,10 +15,11 @@ class MainWindow(QMainWindow):
         # selection.currentIndexChanged
 
         layout = QFormLayout()
-        self.data = QLineEdit("0")
-        self.data.textChanged.connect(self.updateFeet)
+        self.data = QLineEdit("0.0")
+        self.data.textEdited.connect(self.updateFeet)
         layout.addRow(x, self.data)
-        self.output = QLabel("0.0")
+        self.output = QLineEdit("0.0")
+        self.output.textEdited.connect(self.updateMetre)
         layout.addRow(to, self.output)
         main_layout.addLayout(layout)
 
@@ -31,6 +32,12 @@ class MainWindow(QMainWindow):
             self.output.setText(f"{round(float(text)/3.28084,3)}")
         except:
             self.output.setText("0.0")
+
+    def updateMetre(self,text):
+        try:
+            self.data.setText(f"{round(float(text)*3.28084,3)}")
+        except:
+            self.data.setText("0.0")
 
 
 

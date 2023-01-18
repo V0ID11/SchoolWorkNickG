@@ -17,6 +17,7 @@ class MainWindow(QMainWindow):
                 
                 form = QFormLayout()
                 self.name_Edit = QLineEdit()
+                self.name_Edit.textChanged.connect(self.on_text_changed)
                 self.name_Edit.setPlaceholderText("Enter Name")
                 form.addRow("Name:",self.name_Edit)
                 self.location_Edit = QLineEdit()
@@ -60,6 +61,8 @@ class MainWindow(QMainWindow):
         widget.setLayout(layout)
         self.setCentralWidget(widget)
 
+    def on_text_changed(self,text):
+        print(text)
    
         
 

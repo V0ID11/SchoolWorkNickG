@@ -1,7 +1,7 @@
 import sys
-from PyQt5.QtWidgets import *
-from PyQt5.QtCore import *
-from PyQt5.QtGui import *
+from PyQt6.QtWidgets import *
+from PyQt6.QtCore import *
+from PyQt6.QtGui import *
 
 class MainWindow(QMainWindow):
     def __init__(self):
@@ -70,4 +70,4 @@ app = QApplication(sys.argv)
 
 window = MainWindow()
 window.show()
-sys.exit(app.exec_())
+sys.exit(app.exec())

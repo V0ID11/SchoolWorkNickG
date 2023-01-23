@@ -1,7 +1,7 @@
 import sys
-from PyQt5.QtWidgets import QApplication, QWidget, QMainWindow, \
+from PyQt6.QtWidgets import QApplication, QWidget, QMainWindow, \
     QPushButton, QVBoxLayout, QLineEdit, QColorDialog, QMessageBox, QFileDialog
-import PyQt5.QtCore as qtc 
+import PyQt6.QtCore as qtc 
 
 class MainWindow(QMainWindow):
     def __init__(self):

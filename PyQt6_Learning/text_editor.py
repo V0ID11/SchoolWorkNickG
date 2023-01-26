@@ -8,6 +8,7 @@ class MainWindow(QMainWindow):
         super(MainWindow,self).__init__()
         self.setWindowTitle("Text Editor")
         self.setWindowIcon(QIcon('download.png'))
+        
         #Menu
         menuBar = self.menuBar()
         file_menu = menuBar.addMenu("File")
@@ -20,12 +21,17 @@ class MainWindow(QMainWindow):
         save_action.setShortcut('Ctrl+S')
         save_action.triggered.connect(self.save_text)
 
+        save_as_action = QAction('Save As', self)
+        save_as_action.setShortcut('Ctrl+Shift+S')
+        save_as_action.triggered.connect(self.save_as_text)
+
         exit_Action = QAction('Exit', self)
         exit_Action.setShortcut('Ctrl+Shift+Q')
         exit_Action.triggered.connect(self.quit)
 
         file_menu.addAction(open_action)
         file_menu.addAction(save_action)
+        file_menu.addAction(save_as_action)
         file_menu.addAction(exit_Action)
 
         #layout
@@ -38,6 +44,7 @@ class MainWindow(QMainWindow):
 
     def open_text(self):
         filename, _ = QFileDialog.getOpenFileName(self,"Open File", ".", "All Files (*.*)")
+        self.file = filename
         try:
             with open(filename,"r") as file:
                 text = file.readlines()
@@ -47,17 +54,32 @@ class MainWindow(QMainWindow):
                 self.text_edit.setPlainText(x)
         except:
             pass
+
     def save_text(self):
-        filename,_ = QFileDialog.getSaveFileName(self, "Save File", ".", "All Files (*.*)")
         try:
-            with open(filename,"w") as file:
+            try:
+                with open(self.file,"w") as file:
+                    file.writelines(self.text_edit.toPlainText())
+            except:
+                self.save_as_text()
+        except:
+            pass
+
+    def save_as_text(self):
+        try:
+            filename,_ = QFileDialog.getSaveFileName(self, "Save File", ".", "All Files (*.*)")
+            self.file = filename
+            with open(self.file,"w") as file:
                 file.writelines(self.text_edit.toPlainText())
         except:
             pass
 
     def quit(self):
-        dlg = QMessageBox.warning(self, "Exit", "You Will Lose Unsaved Data", QMessageBox.StandardButton.Ok | QMessageBox.StandardButton.Cancel)
+        dlg = QMessageBox.warning(self, "Exit", "You Will Lose Unsaved Data", QMessageBox.StandardButton.Ok | QMessageBox.StandardButton.Save | QMessageBox.StandardButton.Cancel)
         if dlg == QMessageBox.StandardButton.Ok:
+            self.close()
+        elif dlg == QMessageBox.StandardButton.Save:
+            self.save_text()
             self.close()
     
 app = QApplication(sys.argv)

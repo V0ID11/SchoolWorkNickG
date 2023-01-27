@@ -32,6 +32,7 @@ class MainWindow(QMainWindow):
         file_menu.addAction(open_action)
         file_menu.addAction(save_action)
         file_menu.addAction(save_as_action)
+        file_menu.addSeparator()
         file_menu.addAction(exit_Action)
 
         #layout
@@ -52,6 +53,7 @@ class MainWindow(QMainWindow):
                 for i in text:
                     x += i
                 self.text_edit.setPlainText(x)
+            self.setWindowTitle(self.file)
         except:
             pass
 
@@ -71,6 +73,7 @@ class MainWindow(QMainWindow):
             self.file = filename
             with open(self.file,"w") as file:
                 file.writelines(self.text_edit.toPlainText())
+            self.setWindowTitle(self.file)
         except:
             pass
 

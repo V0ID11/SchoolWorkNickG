@@ -86,7 +86,6 @@ class MainWindow(QMainWindow):
             self.close()
     
 app = QApplication(sys.argv)
-
 window = MainWindow()
 window.show()
 app.exec()

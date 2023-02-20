@@ -88,7 +88,6 @@ def LoadAllowedWords():
   AllowedWords = []
   try:
     WordsFile = open("aqawords.txt", "r")
-    print(WordsFile)
     for Word in WordsFile:
       AllowedWords.append(Word.strip().upper())
     WordsFile.close()
@@ -107,13 +106,20 @@ def CheckWordIsInTiles(Word, PlayerTiles):
   return InTiles 
 
 def CheckWordIsValid(Word, AllowedWords):
-  ValidWord = False
-  Count = 0
-  while Count < len(AllowedWords) and not ValidWord:
-    if AllowedWords[Count] == Word:
-      ValidWord = True
-    Count += 1
-  return ValidWord
+  start = 0
+  end = len(sorted(AllowedWords))-1
+  while start <= end:
+    position = (start + end)//2
+    if AllowedWords[position] == Word:
+      return True
+    elif AllowedWords[position] > Word:
+      end = position - 1
+    else:
+      start = position + 1
+  # if found == False:
+  #   if AllowedWords[end] == Word:
+  #     found = True
+  return False
 
 def AddEndOfTurnTiles(TileQueue, PlayerTiles, NewTileChoice, Choice):
   if NewTileChoice == "1":

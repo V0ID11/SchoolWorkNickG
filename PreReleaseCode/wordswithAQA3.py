@@ -6,17 +6,21 @@
 import random
 
 class QueueOfTiles():
-  def __init__(self, MaxSize,allowedWords):
+  def __init__(self, MaxSize):
     self._Contents = []
     self._Rear = -1
+    self._Front = 0
+    self._Size = 0
     self._MaxSize = MaxSize
-    self.getDistribution(allowedWords)
     for Count in range(self._MaxSize):
       self._Contents.append("")
       self.Add()
-    
+
+  def __str__(self):
+      return ", ".join(self._Contents)
+      
   def IsEmpty(self):
-    if self._Rear == -1:
+    if self._Size == 0:
       return True
     else:
       return False
@@ -25,35 +29,37 @@ class QueueOfTiles():
     if self.IsEmpty():
       return None
     else:
-      Item = self._Contents[0]
-      for Count in range (1, self._Rear + 1):
-        self._Contents[Count - 1] = self._Contents[Count]
-      self._Contents[self._Rear] = ""
-      self._Rear -= 1
+      Item = self._Contents[self._Front]
+      self._Contents[self._Front] = ""
+      self._Front = (self._Front+1) % self._MaxSize
+      self._Size -= 1
       return Item
-  
-  def getDistribution(self,allowedWords):
-    self.letters = []
-    for i in range(25):
-      x = 0
-      for y in allowedWords:
-        x += y.count(chr(i+65))
-      print(x)
-      self.letters.append(x)
-    print(self.letters)
 
   def Add(self):
-    if self._Rear < self._MaxSize - 1:
-      RandNo = random.choices([i for i in range(25)],weights=self.letters)
-      self._Rear += 1
-      self._Contents[self._Rear] = chr(65 + RandNo[0])
+    if self._Size < self._MaxSize:
+        if self._Rear < self._MaxSize - 1:
+            RandNo = random.randint(0, 25)
+            self._Rear += 1
+            self._Contents[self._Rear] = chr(65 + RandNo)
+            self._Size += 1
+        else:
+            if 0 < self._Front:
+                RandNo = random.randint(0,25)
+                self._Rear = 0
+                self._Contents[self._Rear] = chr(65 + RandNo)
+                self._Size += 1
+    
 
   def Show(self):
-    if self._Rear != -1:
+    if self._Size != 0:
       print()
       print("The contents of the queue are: ", end="")
-      for Item in self._Contents:
-        print(Item, end="")
+      for Item in range(self._MaxSize):
+        if self._Front + Item < self._MaxSize:
+            print(self._Contents[self._Front + Item], end="")
+        else:
+            print(self._Contents[self._Front + Item - self._MaxSize], end = "")
+        
       print()
 
 def CreateTileDictionary():
@@ -88,12 +94,11 @@ def LoadAllowedWords():
   AllowedWords = []
   try:
     WordsFile = open("aqawords.txt", "r")
-    print(WordsFile)
     for Word in WordsFile:
       AllowedWords.append(Word.strip().upper())
     WordsFile.close()
   except:
-    raise Exception("Need a file named aqawords.txt")
+    pass
   return AllowedWords
 
 def CheckWordIsInTiles(Word, PlayerTiles):
@@ -151,7 +156,7 @@ def UpdateAfterAllowedWord(Word, PlayerTiles, PlayerScore, PlayerTilesPlayed, Ti
   return PlayerTiles, PlayerScore, PlayerTilesPlayed
       
 def UpdateScoreWithPenalty(PlayerScore, PlayerTiles, TileDictionary):
-  for Count in range(len(PlayerTiles)):
+  for Count in range (len(PlayerTiles)):
     PlayerScore -= TileDictionary[PlayerTiles[Count]]  
   return PlayerScore
 
@@ -226,25 +231,16 @@ def HaveTurn(PlayerName, PlayerTiles, PlayerTilesPlayed, PlayerScore, TileDictio
       print("You have played", PlayerTilesPlayed, "tiles so far in this game.")
   return PlayerTiles, PlayerTilesPlayed, PlayerScore, TileQueue  
 
-def DisplayWinner(playerOneName,playerTwoName,PlayerOneScore, PlayerTwoScore):
+def DisplayWinner(PlayerOneScore, PlayerTwoScore):
   print()
   print("**** GAME OVER! ****")
   print()
-  print(f"{playerOneName} your score is", PlayerOneScore)
-  print(f"{playerTwoName} your score is", PlayerTwoScore)
+  print("Player One your score is", PlayerOneScore)
+  print("Player Two your score is", PlayerTwoScore)
   if PlayerOneScore > PlayerTwoScore:
-    with open("highscore.txt","r+") as f:
-      highscore = f.readline()
-      if PlayerOneScore > int(highscore):
-        f.writelines(str(PlayerOneScore))
-      
-    print(f"{playerOneName} wins!")
+    print("Player One wins!")
   elif PlayerTwoScore > PlayerOneScore:
-    with open("highscore.txt","r+") as f:
-      highscore = f.readline()
-      if PlayerTwoScore > int(highscore):
-        f.writelines(str(PlayerTwoScore))
-    print(f"{playerTwoName} wins!")
+    print("Player Two wins!")
   else:
     print("It is a draw!")
   print()
@@ -254,9 +250,7 @@ def PlayGame(AllowedWords, TileDictionary, RandomStart, StartHandSize, MaxHandSi
   PlayerTwoScore = 50
   PlayerOneTilesPlayed = 0
   PlayerTwoTilesPlayed = 0
-  TileQueue = QueueOfTiles(20,AllowedWords)
-  PlayerOneName = input("What is the Name of the first player? ")
-  playerTwoName = input("What is the Name of the second Player?")
+  TileQueue = QueueOfTiles(20)
   if RandomStart:
     PlayerOneTiles = GetStartingHand(TileQueue, StartHandSize)
     PlayerTwoTiles = GetStartingHand(TileQueue, StartHandSize)
@@ -264,14 +258,14 @@ def PlayGame(AllowedWords, TileDictionary, RandomStart, StartHandSize, MaxHandSi
     PlayerOneTiles = "BTAHANDENONSARJ"
     PlayerTwoTiles = "CELZXIOTNESMUAA"
   while PlayerOneTilesPlayed <= MaxTilesPlayed and PlayerTwoTilesPlayed <= MaxTilesPlayed and len(PlayerOneTiles) < MaxHandSize and len(PlayerTwoTiles) < MaxHandSize:
-    PlayerOneTiles, PlayerOneTilesPlayed, PlayerOneScore, TileQueue = HaveTurn(PlayerOneName, PlayerOneTiles, PlayerOneTilesPlayed, PlayerOneScore, TileDictionary, TileQueue, AllowedWords, MaxHandSize, NoOfEndOfTurnTiles)
+    PlayerOneTiles, PlayerOneTilesPlayed, PlayerOneScore, TileQueue = HaveTurn("Player One", PlayerOneTiles, PlayerOneTilesPlayed, PlayerOneScore, TileDictionary, TileQueue, AllowedWords, MaxHandSize, NoOfEndOfTurnTiles)
     print()
     input("Press Enter to continue")
     print()
-    PlayerTwoTiles, PlayerTwoTilesPlayed, PlayerTwoScore, TileQueue = HaveTurn(playerTwoName, PlayerTwoTiles, PlayerTwoTilesPlayed, PlayerTwoScore, TileDictionary, TileQueue, AllowedWords, MaxHandSize, NoOfEndOfTurnTiles)
+    PlayerTwoTiles, PlayerTwoTilesPlayed, PlayerTwoScore, TileQueue = HaveTurn("Player Two", PlayerTwoTiles, PlayerTwoTilesPlayed, PlayerTwoScore, TileDictionary, TileQueue, AllowedWords, MaxHandSize, NoOfEndOfTurnTiles)
   PlayerOneScore = UpdateScoreWithPenalty(PlayerOneScore, PlayerOneTiles, TileDictionary)
   PlayerTwoScore = UpdateScoreWithPenalty(PlayerTwoScore, PlayerTwoTiles, TileDictionary)
-  DisplayWinner(PlayerOneName, playerTwoName, PlayerOneScore, PlayerTwoScore)
+  DisplayWinner(PlayerOneScore, PlayerTwoScore)
 
 def DisplayMenu():
   print()
@@ -306,4 +300,11 @@ def Main():
       PlayGame(AllowedWords, TileDictionary, False, 15, MaxHandSize, MaxTilesPlayed, NoOfEndOfTurnTiles)
       
 if __name__ == "__main__":
-  Main()
+  queue = QueueOfTiles(20)
+  queue.Show()
+  for i in range(5):
+    queue.Remove()
+    queue.Show()
+  for i in range(5):
+    queue.Add()
+    queue.Show()

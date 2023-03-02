@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, render_template
 from flask import request 
 import datetime
 
@@ -25,25 +25,28 @@ def calc_next_birthday(day,month,year):
     nextAge = f'Age at next birthday:  {age}'
     return nextBirthday,numDays,nextAge
 
-@app.route("/DoB")
-def dateOfBirth():
-    year = request.args.get('year','')
-    month = request.args.get('month','')
-    day = request.args.get('day','')
-    if day and month and year:
-        return f"{day},{month},{year}"
-    else:
-        return "No Arguments Detected"
 
-@app.route("/next_birthday")
+
+@app.route("/")
+@app.route("/NextBirthday", methods = ['POST','GET'])
 def nextBirthday():
-    year = request.args.get('year','')
-    month = request.args.get('month','')
-    day = request.args.get('day','')
+    if request.method == 'POST':
+        typedDate = request.form['date']
+        year,month,day = typedDate.split("-")
 
-    nextBirthday,numDays,nextAge = calc_next_birthday(day,month,year)
-    print(nextBirthday)
-    return f"{nextBirthday}<p>{numDays}<p>{nextAge}"
+        nextBirthday,numDays,nextAge = calc_next_birthday(day,month,year)
+    else:
+        typedDate = ''
+
+    return render_template('dateForm.html', date=typedDate, NextBirthday=nextBirthday, NumDays=numDays, NextAge=nextAge)
+
+    # year = request.args.get('year','')
+    # month = request.args.get('month','')
+    # day = request.args.get('day','')
+
+    # nextBirthday,numDays,nextAge = calc_next_birthday(day,month,year)
+    # print(nextBirthday)
+    # return f"{nextBirthday}<p>{numDays}<p>{nextAge}"
 
 if __name__ == '__main__':
     app.run(host="127.0.0.1", port=5000, debug=True)

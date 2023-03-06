@@ -37,6 +37,9 @@ def nextBirthday():
         nextBirthday,numDays,nextAge = calc_next_birthday(day,month,year)
     else:
         typedDate = ''
+        nextBirthday=""
+        numDays = ""
+        nextAge = ""
 
     return render_template('dateForm.html', date=typedDate, NextBirthday=nextBirthday, NumDays=numDays, NextAge=nextAge)
 

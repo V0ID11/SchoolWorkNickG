@@ -48,13 +48,14 @@ def comments():
     if request.method == 'POST':
         comment = request.form['comment']
         with open("learnFlask/comments.txt","a") as file:
-            file.write(comment)
+            file.write(f"\n{comment}")
     
         with open("learnFlask/comments.txt","r") as file:
             x = file.readlines()
     else:
-        x = []
-        
+        with open("learnFlask/comments.txt","r") as file:
+            x = file.readlines()
+    print(x)
         
     return render_template('comments.html', comment_list = x)
 

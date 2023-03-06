@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Hello</title>
+</head>
+<body>
+<form action = "/comments" method = "post">
+    <p>What is your comment?</p>
+    <p><input type="text" id="comment" name="comment"></p>
+    <p><input type = "submit" value = "submit" /></p>
+</form>
+
+<ul>
+    % for comment in comment_list %}
+    <li>
+    { {comment}}
+    </li>
+    {% endfor %}
+</ul>
+</body>
+</html>

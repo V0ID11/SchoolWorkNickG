@@ -43,6 +43,21 @@ def nextBirthday():
 
     return render_template('dateForm.html', date=typedDate, NextBirthday=nextBirthday, NumDays=numDays, NextAge=nextAge)
 
+@app.route("/comments", methods = ['POST','GET'])
+def comments():
+    if request.method == 'POST':
+        comment = request.form['comment']
+        with open("learnFlask/comments.txt","a") as file:
+            file.write(comment)
+    
+        with open("learnFlask/comments.txt","r") as file:
+            x = file.readlines()
+    else:
+        x = []
+        
+        
+    return render_template('comments.html', comment_list = x)
+
     # year = request.args.get('year','')
     # month = request.args.get('month','')
     # day = request.args.get('day','')

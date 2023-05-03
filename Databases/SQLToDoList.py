@@ -30,8 +30,9 @@ def ViewTable():
     tasks = sqlite3.connect('ToDo.db')
     query = """SELECT name From tasks WHERE status_id != TRUE ORDER BY priority ASC"""
     cursor = tasks.execute(query)
+    print("\nTo Do")
     for i,desc in enumerate(cursor):
-        print(f"{i}. {desc[0]}")
+        print(f"{i+1}. {desc[0]}")
     tasks.close()
 
 def completeTask(num):
@@ -42,7 +43,7 @@ def completeTask(num):
     for i in cursor:
         final.append(i)
     print(final)
-    id = final[num][1]
+    id = final[num-1][1]
     updateQuery = """UPDATE tasks SET status_id = TRUE WHERE id = (?)"""
     tasks.execute(updateQuery, str(id))
     tasks.commit()
